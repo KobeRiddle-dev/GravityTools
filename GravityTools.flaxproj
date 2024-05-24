@@ -1,0 +1,28 @@
+﻿{
+	"Name": "GravityTools",
+	"Version": "0.1",
+	"Company": "KobeRiddle-dev",
+	"Copyright": "",
+	"GameTarget": "GravityToolsTarget",
+	"EditorTarget": "GravityToolsEditorTarget",
+	"References": [
+		{
+			"Name": "$(EnginePath)/Flax.flaxproj"
+		}
+	],
+	"DefaultScene": null,
+	"DefaultSceneSpawn": {
+		"Position": {
+			"X": 0.0,
+			"Y": 0.0,
+			"Z": 0.0
+		},
+		"Direction": {
+			"X": 0.0,
+			"Y": 0.0,
+			"Z": 0.0
+		}
+	},
+	"MinEngineVersion": "0.0.6167",
+	"EngineNickname": null
+}
