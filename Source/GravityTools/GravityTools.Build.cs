@@ -2,6 +2,10 @@ using Flax.Build;
 using Flax.Build.NativeCpp;
 
 namespace GravityTools;
+
+/// <summary>
+/// The Game Module for GravityTools
+/// </summary>
 public class GravityTools : GameModule
 {
     /// <inheritdoc />
