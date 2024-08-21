@@ -7,10 +7,10 @@ namespace GravityTools
     /// The sample game plugin.
     /// </summary>
     /// <seealso cref="FlaxEngine.GamePlugin" />
-    public class GravityTools : GamePlugin
+    public class GravityToolsPlugin : GamePlugin
     {
         /// <inheritdoc />
-        public GravityTools()
+        public GravityToolsPlugin()
         {
             _description = new PluginDescription
             {
@@ -20,7 +20,7 @@ namespace GravityTools
                 AuthorUrl = null,
                 HomepageUrl = null,
                 RepositoryUrl = "https://github.com/FlaxEngine/GravityTools",
-                Description = "This is an example plugin project.",
+                Description = "Tools for creating \"artificial\" gravity sources.",
                 Version = new Version(0, 1),
                 IsAlpha = false,
                 IsBeta = false,
