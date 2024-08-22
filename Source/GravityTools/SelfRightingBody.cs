@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using FlaxEngine;
+using GravityTools.Units;
+
 
 
 #if USE_LARGE_WORLDS
@@ -83,7 +85,7 @@ public class SelfRightingBody : Script
         // Debug.Log("Drawing!");
         DebugDraw.DrawRay(this.Actor.Position, this.GetStrongestGravitationalVector(), Color.PaleGreen, length: 20);
     }
-    
+
     /// <summary>
     /// Points the bottom of this GravityObject towards the strongest gravitational force
     /// </summary>
@@ -98,9 +100,9 @@ public class SelfRightingBody : Script
 
     /// <param name="sourceMass">Outputs the mass of the GravitySource to which the vector points</param>
     /// <returns>the strongest gravitational vector of all the gravity sources in this.GravitySources</returns>
-    public Vector3 GetStrongestGravitationalVector(out Real sourceMass)
+    public Vector3 GetStrongestGravitationalVector(out Mass sourceMass)
     {
-        sourceMass = 1;
+        sourceMass = Mass.FromKilograms(1);
         Vector3 strongestGravitationalVector = this.Actor.As<RigidBody>().PhysicsScene.Gravity * this.RigidBody.Mass;
 
         foreach (GravitySource gravitySource in this.GravitySources)

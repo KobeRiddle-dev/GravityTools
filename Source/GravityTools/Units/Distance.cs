@@ -8,7 +8,7 @@ using Mathr = FlaxEngine.Mathf;
 
 namespace GravityTools.Units;
 
-struct Distance(Real centimeters)
+public struct Distance(Real centimeters)
 {
     public const Real MetersPerKilometer = 1000;
     public const Real CentimetersPerMeter = 1000;
@@ -29,6 +29,11 @@ struct Distance(Real centimeters)
     public static Distance FromKilometers(Real kilometers)
     {
         return FromMeters(kilometers * MetersPerKilometer);
+    }
+
+    public static Distance FromCentimeters(Real centimeters)
+    {
+        return new Distance(centimeters);
     }
 
     public static Distance operator +(Distance left, Distance right)

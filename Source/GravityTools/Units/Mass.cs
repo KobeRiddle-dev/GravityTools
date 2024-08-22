@@ -8,19 +8,19 @@ using Mathr = FlaxEngine.Mathf;
 
 namespace GravityTools.Units;
 
-struct Mass(Real grams)
+public struct Mass(Real grams)
 {
     public const Real GramsPerKilogram = 1000;
 
     private readonly Real grams = grams;
 
-    public readonly Real Meters { get => this.grams / GramsPerKilogram; }
+    public readonly Real Kilograms { get => this.grams / GramsPerKilogram; }
 
     public readonly Real Grams { get => this.grams; }
 
-    public static Mass FromKilograms(Real meters)
+    public static Mass FromKilograms(Real kilograms)
     {
-        return new Mass(meters * GramsPerKilogram);
+        return new Mass(kilograms * GramsPerKilogram);
     }
 
     public static Mass operator +(Mass left, Mass right)

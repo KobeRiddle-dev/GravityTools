@@ -7,6 +7,7 @@ using Mathr = FlaxEngine.Mathf;
 
 using FlaxEngine;
 using System.ComponentModel;
+using GravityTools.Units;
 
 namespace GravityTools;
 
@@ -141,10 +142,10 @@ public class BasicRigidBodyController : SelfRightingBody
 
     private void RotateBody(float rotationFactor)
     {
-
-        Real strongestAcceleration = this.GetStrongestGravitationalVector(out Real sourceMass).Length / sourceMass;
+        // TODO: Make this more readable
+        Real strongestAcceleration = this.GetStrongestGravitationalVector(out Mass sourceMass).Length / sourceMass.Kilograms;
         Debug.Log("strongestAcceleration " + strongestAcceleration);
-        if (this.IsInGravity && strongestAcceleration > 1) // FIXME: This condition is borked.
+        if (this.IsInGravity && strongestAcceleration > 1)
         {
             this.SelfRight();
         }

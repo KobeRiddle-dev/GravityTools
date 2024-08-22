@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using FlaxEngine;
 using System.Linq;
 using static GravityTools.Constants;
+using GravityTools.Units;
+
 
 #if USE_LARGE_WORLDS
 using Real = System.Double;
@@ -23,7 +25,7 @@ public class GravitySource : Script
     public Vector3 GravitationalDirection { get; set; } = Vector3.One;
 
     /// <summary>
-    /// The length of the gravitational acceleration vector at the surface, in cm/2^2. Earth's is 980 cm/s^2. 
+    /// The length of the gravitational acceleration vector at the surface, in cm/s^2. Earth's is 980 cm/s^2. 
     /// Changing this will update the mass accordingly.
     /// </summary>
     public Real SurfaceGravity
@@ -57,13 +59,13 @@ public class GravitySource : Script
     /// Changing this will update SurfaceGravity accordingly.
     /// If MassUpdatesToRigidBody is enabled, the mass of the rigidbody associated with the GravitySource will also be updated upon changes to Mass.
     /// </summary>
-    public float Mass
+    public Mass Mass
     {
         get
         {
-            if (this.UseRigidBodyMass && this.rigidBody != null && this.mass != this.rigidBody.Mass)
+            if (this.UseRigidBodyMass && this.rigidBody != null && this.mass.Kilograms != this.rigidBody.Mass)
             {
-                this.mass = this.rigidBody.Mass;
+                this.mass = Mass.FromKilograms(this.rigidBody.Mass);
                 this.UpdateGravityBasedOnMass();
             }
 
@@ -73,12 +75,12 @@ public class GravitySource : Script
         {
             mass = value;
             if (this.UseRigidBodyMass && this.rigidBody != null)
-                this.rigidBody.Mass = this.mass;
+                this.rigidBody.Mass = (float)this.mass.Kilograms;
 
             UpdateGravityBasedOnMass();
         }
     }
-    private float mass;
+    private Mass mass;
 
     /// <summary>
     /// Determines whether a rigidbody the GravitySource script is attached to will have its mass synchronized with the GravitySource's mass. Turning this off is useful if you wish to create less realistic simulations, i.e. a planet with high gravitational force that is small in mass as far as other GravitySources are concerned.
@@ -187,7 +189,7 @@ public class GravitySource : Script
     /// </summary>
     public void UpdateMassBasedOnGravity()
     {
-        this.Mass = (float)(this.surfaceGravity * this.SurfaceRadius * this.SurfaceRadius / GRAVITATIONAL_CONSTANT);
+        this.Mass = Mass.FromKilograms((float)(this.surfaceGravity * this.SurfaceRadius * this.SurfaceRadius / GRAVITATIONAL_CONSTANT));
 
         // if (this.UseRigidBodyMass && this.rigidBody != null)
         //     this.rigidBody.Mass = this.mass;
@@ -199,7 +201,7 @@ public class GravitySource : Script
     /// </summary>
     public void UpdateGravityBasedOnMass()
     {
-        this.surfaceGravity = (float)(GRAVITATIONAL_CONSTANT * this.Mass / (SurfaceRadius * SurfaceRadius));
+        this.surfaceGravity = (float)(GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / (SurfaceRadius * SurfaceRadius));
     }
 
     private void AttractAllRigidBodiesInGravity()
@@ -237,7 +239,7 @@ public class GravitySource : Script
         Vector3 fromThisToRigidBodyGravity = fromThisToRigidBody * this.GravitationalDirection;
 
         // F_g = G * (m1 * m2) / r^2
-        Real gravitationalForce = GRAVITATIONAL_CONSTANT * (this.Mass * rigidBody.Mass) / fromThisToRigidBodyGravity.LengthSquared;
+        Real gravitationalForce = GRAVITATIONAL_CONSTANT * (this.Mass.Kilograms * rigidBody.Mass) / fromThisToRigidBodyGravity.LengthSquared;
         return gravitationalForce;
     }
 
@@ -252,7 +254,7 @@ public class GravitySource : Script
         Vector3 fromThisToRigidBodyGravity = fromThisToRigidBody * this.GravitationalDirection;
 
         // F_g = G * (m1 * m2) / r^2
-        Real gravitationalForce = GRAVITATIONAL_CONSTANT * this.Mass / fromThisToRigidBodyGravity.LengthSquared;
+        Real gravitationalForce = GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / Distance.FromCentimeters(fromThisToRigidBodyGravity.LengthSquared).Meters;
         return gravitationalForce;
     }
 
