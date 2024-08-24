@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GravityToolsTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82938cef74342dd237dde7a67cbcbf643342eca3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bac2c4dbbb301c8df57181ac8afe7cc33d84b9de")]
 [assembly: System.Reflection.AssemblyProductAttribute("GravityToolsTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GravityToolsTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

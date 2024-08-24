@@ -21,63 +21,90 @@ namespace GravityTools;
 /// </summary>
 public class GravitySource : Script
 {
-    public Real GForce { get => SurfaceGravity / 980; set => SurfaceGravity = 980 * value; }
+    /// <summary>
+    /// The Surface gravitational force measured in Gs
+    /// </summary>
+    public Real GForce
+    {
+        get => SurfaceGravity / 9.8;
+        set => SurfaceGravity = 9.8 * value;
+    }
     public Vector3 GravitationalDirection { get; set; } = Vector3.One;
 
     /// <summary>
-    /// The length of the gravitational acceleration vector at the surface, in cm/s^2. Earth's is 980 cm/s^2. 
+    /// The length of the gravitational acceleration vector at the surface, in m/s^2. Earth's is 9.8 m/s^2. 
     /// Changing this will update the mass accordingly.
     /// </summary>
     public Real SurfaceGravity
     {
-        get => surfaceGravity;
+        get
+        {
+            return this.Mass.Kilograms / (Mathr.Pow(this.SurfaceRadius.Meters, 2) / GRAVITATIONAL_CONSTANT);
+        }
         set
         {
-            this.surfaceGravity = value;
-            UpdateMassBasedOnGravity();
+            UpdateMassBasedOnGravity(value);
         }
     }
-    private Real surfaceGravity = 980;
+
+    /// <summary>
+    /// The radius at the "surface" of the GravitySource, where the acceleration on other objects from the GravitySource's gravity will equal SurfaceGravity.
+    /// Measured in cm.
+    /// </summary>
+    public Real SurfaceRadiusCentimeters
+    {
+        get => this.SurfaceRadius.Centimeters;
+        set => this.SurfaceRadius = Distance.FromCentimeters(value);
+    }
 
     /// <summary>
     /// The radius at the "surface" of the GravitySource, where the acceleration on other objects from the GravitySource's gravity will equal SurfaceGravity.
     /// </summary>
-    // [DefaultValue(10)]
-    public Real SurfaceRadius
+    [HideInEditor]
+    public Distance SurfaceRadius
     {
         get => surfaceRadius;
         set
         {
             surfaceRadius = value;
-            this.UpdateMassBasedOnGravity();
+            this.UpdateMassBasedOnGravity(this.SurfaceGravity);
         }
     }
-    private Real surfaceRadius = 10;
+    private Distance surfaceRadius = Distance.FromMeters(1);
+
+    /// <summary>
+    /// The Mass of the GravitySource in Kilograms.
+    /// Changing this will update SurfaceGravity accordingly.
+    /// If MassUpdatesToRigidBody is enabled, the mass of the rigidbody associated with the GravitySource will also be updated upon changes to Mass.
+    /// </summary>
+    public Real MassKilograms
+    {
+        get => this.Mass.Kilograms;
+        set => this.Mass = Mass.FromKilograms(value);
+    }
 
     /// <summary>
     /// The Mass of the GravitySource.
     /// Changing this will update SurfaceGravity accordingly.
     /// If MassUpdatesToRigidBody is enabled, the mass of the rigidbody associated with the GravitySource will also be updated upon changes to Mass.
     /// </summary>
+    [HideInEditor]
     public Mass Mass
     {
         get
         {
-            if (this.UseRigidBodyMass && this.rigidBody != null && this.mass.Kilograms != this.rigidBody.Mass)
+            if (this.UseRigidBodyMass && this.rigidBody != null && this.Mass.Kilograms != this.rigidBody.Mass)
             {
                 this.mass = Mass.FromKilograms(this.rigidBody.Mass);
-                this.UpdateGravityBasedOnMass();
             }
 
-            return mass;
+            return this.mass;
         }
         set
         {
-            mass = value;
+            this.mass = value;
             if (this.UseRigidBodyMass && this.rigidBody != null)
                 this.rigidBody.Mass = (float)this.mass.Kilograms;
-
-            UpdateGravityBasedOnMass();
         }
     }
     private Mass mass;
@@ -85,16 +112,7 @@ public class GravitySource : Script
     /// <summary>
     /// Determines whether a rigidbody the GravitySource script is attached to will have its mass synchronized with the GravitySource's mass. Turning this off is useful if you wish to create less realistic simulations, i.e. a planet with high gravitational force that is small in mass as far as other GravitySources are concerned.
     /// </summary>
-    public bool UseRigidBodyMass
-    {
-        get => useRigidBodyMass;
-        set
-        {
-            this.UpdateMassBasedOnGravity();
-            useRigidBodyMass = value;
-        }
-    }
-    private bool useRigidBodyMass = false;
+    public bool UseRigidBodyMass { get; set; } = false;
 
     /// <summary>
     /// If true, and the GravitySource script is attached to a rigidbody, the rigidbody will be mutually attracted to other rigidbodies in it's gravitational volume.
@@ -187,22 +205,20 @@ public class GravitySource : Script
     /// Calculates and updates the mass of the GravitySource based on its surface gravity and surface radius.
     /// this.Mass = r^2 * surfaceGravity / G
     /// </summary>
-    public void UpdateMassBasedOnGravity()
+    public void UpdateMassBasedOnGravity(Real surfaceGravity)
     {
-        this.Mass = Mass.FromKilograms((float)(this.surfaceGravity * this.SurfaceRadius * this.SurfaceRadius / GRAVITATIONAL_CONSTANT));
-
-        // if (this.UseRigidBodyMass && this.rigidBody != null)
-        //     this.rigidBody.Mass = this.mass;
+        Real surfaceRadiusSquared = Mathr.Pow(this.SurfaceRadius.Meters, 2);
+        this.Mass = Mass.FromKilograms((float)(surfaceGravity * surfaceRadiusSquared / GRAVITATIONAL_CONSTANT));
     }
 
-    /// <summary>
-    /// Calculates and updates the surface gravity of the GravitySource based on its mass and surface radius.
-    /// surfaceGravity = (G * this.Mass) / r^2
-    /// </summary>
-    public void UpdateGravityBasedOnMass()
-    {
-        this.surfaceGravity = (float)(GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / (SurfaceRadius * SurfaceRadius));
-    }
+    // /// <summary>
+    // /// Calculates and updates the surface gravity of the GravitySource based on its mass and surface radius.
+    // /// surfaceGravity = (G * this.Mass) / r^2
+    // /// </summary>
+    // public void UpdateGravityBasedOnMass()
+    // {
+    //     this.surfaceGravity = (float)(GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / (SurfaceRadius * SurfaceRadius));
+    // }
 
     private void AttractAllRigidBodiesInGravity()
     {
