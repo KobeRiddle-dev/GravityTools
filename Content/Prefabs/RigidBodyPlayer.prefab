@@ -1,7 +1,7 @@
 {
 	"ID": "55c5cffe45137a8d25396eafbfe99c1f",
 	"TypeName": "FlaxEngine.Prefab",
-	"EngineBuild": 6407,
+	"EngineBuild": 6512,
 	"Data": [
 	{
 		"ID": "b5b6b9374aae97b4ed1427b0e85c7066",
@@ -13,10 +13,12 @@
 		"UseCCD": true
 	},
 	{
-		"ID": "2fa783e449903fb734e03ba64ced9c04",
-		"TypeName": "Gravity.BasicRigidBodyController",
+		"ID": "e4cef6b146a44c5f3d64c49f61534426",
+		"TypeName": "GravityTools.BasicRigidBodyController",
 		"ParentID": "b5b6b9374aae97b4ed1427b0e85c7066",
-		"V": {}
+		"V": {
+	"SelfRightWhenInGravity": true
+}
 	},
 	{
 		"ID": "f69371a448ba4face8ea7ebf1fcd07b9",

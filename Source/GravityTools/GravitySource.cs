@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using FlaxEngine;
-using System.Linq;
-using static GravityTools.Constants;
-using GravityTools.Units;
-
-
 #if USE_LARGE_WORLDS
 using Real = System.Double;
 using Mathr = FlaxEngine.Mathd;
@@ -13,6 +5,13 @@ using Mathr = FlaxEngine.Mathd;
 using Real = System.float;
 using Mathr = FlaxEngine.Mathf;
 #endif
+
+using System;
+using System.Collections.Generic;
+using FlaxEngine;
+using System.Linq;
+using static GravityTools.Constants;
+using GravityTools.Units;
 
 namespace GravityTools;
 
@@ -29,6 +28,10 @@ public class GravitySource : Script
         get => SurfaceGravity / 9.8;
         set => SurfaceGravity = 9.8 * value;
     }
+
+    /// <summary>
+    /// Controls the direction of the gravitational field
+    /// </summary>
     public Vector3 GravitationalDirection { get; set; } = Vector3.One;
 
     /// <summary>
@@ -77,9 +80,9 @@ public class GravitySource : Script
     /// Changing this will update SurfaceGravity accordingly.
     /// If MassUpdatesToRigidBody is enabled, the mass of the rigidbody associated with the GravitySource will also be updated upon changes to Mass.
     /// </summary>
-    public Real MassKilograms
+    public float MassKilograms
     {
-        get => this.Mass.Kilograms;
+        get => (float)this.Mass.Kilograms;
         set => this.Mass = Mass.FromKilograms(value);
     }
 
@@ -93,9 +96,9 @@ public class GravitySource : Script
     {
         get
         {
-            if (this.UseRigidBodyMass && this.rigidBody != null && this.Mass.Kilograms != this.rigidBody.Mass)
+            if (this.UseRigidBodyMass && this.RigidBody != null && this.Mass.Kilograms != this.RigidBody.Mass)
             {
-                this.mass = Mass.FromKilograms(this.rigidBody.Mass);
+                this.mass = Mass.FromKilograms(this.RigidBody.Mass);
             }
 
             return this.mass;
@@ -103,8 +106,8 @@ public class GravitySource : Script
         set
         {
             this.mass = value;
-            if (this.UseRigidBodyMass && this.rigidBody != null)
-                this.rigidBody.Mass = (float)this.mass.Kilograms;
+            if (this.UseRigidBodyMass && this.RigidBody != null)
+                this.RigidBody.Mass = (float)this.mass.Kilograms;
         }
     }
     private Mass mass;
@@ -121,17 +124,20 @@ public class GravitySource : Script
 
     private List<RigidBody> rigidBodiesInGravity;
 
-    public RigidBody rigidBody;
-    public Collider GravityVolume;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public RigidBody RigidBody { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Collider GravityVolume { get; set; }
 
     /// <inheritdoc/>
     public override void OnStart()
     {
-        // Here you can add code that needs to be called when script is created, just before the first game update
-        // this.rigidBody = this.Actor.FindActor<RigidBody>();
-        // this.gravitationalBoundCollider = this.Actor.GetChild<Collider>();
-
-        // Debug.Log("G: " + GRAVITATIONAL_CONSTANT);
         this.rigidBodiesInGravity = new List<RigidBody>();
 
         if (this.GravityVolume != null)
@@ -154,6 +160,7 @@ public class GravitySource : Script
         this.GravityVolume.TriggerExit -= this.OnObjectExitGravity;
     }
 
+    /// <inheritdoc/>
     public override void OnDebugDraw()
     {
         if (this.GravityVolume is BoxCollider)
@@ -168,6 +175,7 @@ public class GravitySource : Script
         // Here you can add code that needs to be called every frame
     }
 
+    /// <inheritdoc/>
     public override void OnFixedUpdate()
     {
         this.AttractAllRigidBodiesInGravity();
@@ -180,7 +188,7 @@ public class GravitySource : Script
         if (this.Actor.GetChildren<PhysicsColliderActor>().Contains(collider))
             return;
 
-        // Debug.Log("Object entered " + this.Actor.Name + "'s gravity: " + collider.AttachedRigidBody.Name);
+        Debug.Log("Object entered " + this.Actor.Name + "'s gravity: " + collider.AttachedRigidBody.Name);
 
         if (collider.AttachedRigidBody.TryGetScript<SelfRightingBody>(out SelfRightingBody gravityObject))
             gravityObject.GravitySources.Add(this);
@@ -191,10 +199,9 @@ public class GravitySource : Script
 
     private void OnObjectExitGravity(PhysicsColliderActor collider)
     {
-        // Debug.Log("Object exited " + this.Actor.Name + "'s gravity: " + collider.AttachedRigidBody.Name);
+        Debug.Log("Object exited " + this.Actor.Name + "'s gravity: " + collider.AttachedRigidBody.Name);
 
-        SelfRightingBody gravityObject;
-        if (collider.AttachedRigidBody.TryGetScript<SelfRightingBody>(out gravityObject))
+        if (collider.AttachedRigidBody.TryGetScript<SelfRightingBody>(out SelfRightingBody gravityObject))
             gravityObject.GravitySources.Remove(this);
 
         if (collider.AttachedRigidBody != null)
@@ -211,15 +218,6 @@ public class GravitySource : Script
         this.Mass = Mass.FromKilograms((float)(surfaceGravity * surfaceRadiusSquared / GRAVITATIONAL_CONSTANT));
     }
 
-    // /// <summary>
-    // /// Calculates and updates the surface gravity of the GravitySource based on its mass and surface radius.
-    // /// surfaceGravity = (G * this.Mass) / r^2
-    // /// </summary>
-    // public void UpdateGravityBasedOnMass()
-    // {
-    //     this.surfaceGravity = (float)(GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / (SurfaceRadius * SurfaceRadius));
-    // }
-
     private void AttractAllRigidBodiesInGravity()
     {
         foreach (RigidBody rigidBody in rigidBodiesInGravity)
@@ -235,13 +233,12 @@ public class GravitySource : Script
     /// <param name="rigidBody"></param>
     private void Attract(RigidBody rigidBody)
     {
-        // if (rigidBody.GetNamePath() == "Scene/RigidBodyPlayer")
-        //     Debug.Log("Attracting object: " + rigidBody.GetNamePath() + " with acceleration " + this.GetGravitationalForceBetween(rigidBody) / this.Mass + " and a vector " + this.GetGravitationalVectorTowards(rigidBody));
+        Debug.Log("Attracting object: " + rigidBody.GetNamePath() + " with acceleration " + this.GetGravitationalAccelerationFor(rigidBody) + " and a vector " + this.GetGravitationalVectorTowards(rigidBody));
 
         rigidBody.AddForce(-this.GetGravitationalVectorTowards(rigidBody), mode: ForceMode.Force);
 
-        if (this.rigidBody != null && this.AffectedByMutualGravitation)
-            this.rigidBody.AddForce(this.GetGravitationalVectorTowards(rigidBody), mode: ForceMode.Force);
+        if (this.RigidBody != null && this.AffectedByMutualGravitation)
+            this.RigidBody.AddForce(this.GetGravitationalVectorTowards(rigidBody), mode: ForceMode.Force);
     }
 
     /// <summary>
@@ -255,7 +252,7 @@ public class GravitySource : Script
         Vector3 fromThisToRigidBodyGravity = fromThisToRigidBody * this.GravitationalDirection;
 
         // F_g = G * (m1 * m2) / r^2
-        Real gravitationalForce = GRAVITATIONAL_CONSTANT * (this.Mass.Kilograms * rigidBody.Mass) / fromThisToRigidBodyGravity.LengthSquared;
+        Real gravitationalForce = GRAVITATIONAL_CONSTANT * (this.Mass.Kilograms * rigidBody.Mass) / Distance.FromCentimeters(fromThisToRigidBodyGravity.LengthSquared).Meters;
         return gravitationalForce;
     }
 
@@ -266,12 +263,11 @@ public class GravitySource : Script
     /// <returns>the gravitational acceleration for <paramref name="rigidBody"/>.</returns>
     public Real GetGravitationalAccelerationFor(RigidBody rigidBody)
     {
-        Vector3 fromThisToRigidBody = rigidBody.Position - this.Actor.Position;
-        Vector3 fromThisToRigidBodyGravity = fromThisToRigidBody * this.GravitationalDirection;
+        Real force = this.GetGravitationalForceBetween(rigidBody);
 
-        // F_g = G * (m1 * m2) / r^2
-        Real gravitationalForce = GRAVITATIONAL_CONSTANT * this.Mass.Kilograms / Distance.FromCentimeters(fromThisToRigidBodyGravity.LengthSquared).Meters;
-        return gravitationalForce;
+        Real acceleration = force / rigidBody.Mass;
+        
+        return acceleration;
     }
 
     /// <summary>
