@@ -3,7 +3,7 @@ using Real = System.Double;
 using Mathr = FlaxEngine.Mathd;
 using System.Runtime.CompilerServices;
 #else
-using Real = System.float;
+using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 

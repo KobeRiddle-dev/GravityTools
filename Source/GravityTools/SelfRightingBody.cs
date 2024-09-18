@@ -3,12 +3,11 @@ using FlaxEngine;
 using GravityTools.Units;
 
 
-
 #if USE_LARGE_WORLDS
 using Real = System.Double;
 using Mathr = FlaxEngine.Mathd;
 #else
-using Real = System.float;
+using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 

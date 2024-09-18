@@ -2,7 +2,7 @@
 using Real = System.Double;
 using Mathr = FlaxEngine.Mathd;
 #else
-using Real = System.float;
+using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 
@@ -25,8 +25,8 @@ public class GravitySource : Script
     /// </summary>
     public Real GForce
     {
-        get => SurfaceGravity / 9.8;
-        set => SurfaceGravity = 9.8 * value;
+        get => this.SurfaceGravity / 9.8f;
+        set => this.SurfaceGravity = 9.8f * value;
     }
 
     /// <summary>
@@ -66,10 +66,10 @@ public class GravitySource : Script
     [HideInEditor]
     public Distance SurfaceRadius
     {
-        get => surfaceRadius;
+        get => this.surfaceRadius;
         set
         {
-            surfaceRadius = value;
+            this.surfaceRadius = value;
             this.UpdateMassBasedOnGravity(this.SurfaceGravity);
         }
     }

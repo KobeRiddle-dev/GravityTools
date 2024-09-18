@@ -8,19 +8,19 @@
 			"TypeName": "FlaxEngine.Scene",
 			"Lightmaps": [
 				{
-					"Lightmap0": "1cb4879d4eeba57f8c616cb7ab698347",
-					"Lightmap1": "86596aaf4e4d27f75d9853941697651d",
-					"Lightmap2": "6d6fb9e449657605343c3fa7aa8a3469"
+					"Lightmap0": "00000000000000000000000000000000",
+					"Lightmap1": "00000000000000000000000000000000",
+					"Lightmap2": "00000000000000000000000000000000"
 				},
 				{
-					"Lightmap0": "7c52b9ff475c80564a4b0b9620e349cc",
-					"Lightmap1": "d5be4f8140450bc5ad4ff7a52e5fd1d7",
-					"Lightmap2": "eccc09ff4b2dff4037b6889b1cf2427f"
+					"Lightmap0": "00000000000000000000000000000000",
+					"Lightmap1": "00000000000000000000000000000000",
+					"Lightmap2": "00000000000000000000000000000000"
 				},
 				{
-					"Lightmap0": "d5c0a3fe42f393fdc96477ae034a149f",
-					"Lightmap1": "94e38d0344b21b308916449423daf174",
-					"Lightmap2": "00d3ccac4758c42181423da60f1b299c"
+					"Lightmap0": "00000000000000000000000000000000",
+					"Lightmap1": "00000000000000000000000000000000",
+					"Lightmap2": "00000000000000000000000000000000"
 				}
 			],
 			"LightmapSettings": {
@@ -33,12 +33,6 @@
 				"UseGeometryWithNoMaterials": true,
 				"Quality": 100
 			}
-		},
-		{
-			"ID": "6ff0581d474c84230b3d0fa9f17e0972",
-			"TypeName": "ExitOnEsc",
-			"ParentID": "74a68a984824b4510d12589f199ad68f",
-			"V": {}
 		},
 		{
 			"ID": "28553d634087c67c711ebd96080482aa",
@@ -71,8 +65,7 @@
 					"Y": 249.3258056640625,
 					"Z": 0.0
 				}
-			},
-			"ProbeID": "1e1fb3a7447c1265b15967b480549d98"
+			}
 		},
 		{
 			"ID": "deecf0894777293a4f478dadacf2a6f8",
@@ -113,7 +106,6 @@
 				}
 			},
 			"Brightness": 0.75,
-			"BakedProbe": "1c0e10484ff57d402275289550564b9f",
 			"Mode": 0
 		},
 		{
@@ -192,9 +184,9 @@
 			"TypeName": "GravityTools.GravitySource",
 			"ParentID": "22c499294afc2c3c69d4fc86a2e0a58b",
 			"V": {
-	"GForce": 1.999999999971913,
-	"SurfaceGravity": 19.599999999724748,
-	"MassKilograms": 293673435136.0,
+	"GForce": 9.799999598175377,
+	"SurfaceGravity": 96.0399960621187,
+	"MassKilograms": 1.4389998E+12,
 	"Mass": {},
 	"RigidBody": "22c499294afc2c3c69d4fc86a2e0a58b",
 	"GravityVolume": "8009f91543070a56c84cc69b37a687ae"
@@ -473,7 +465,7 @@
 					"Z": -1876.6102294921876
 				}
 			},
-			"Mass": 259.1523132324219
+			"Mass": 4.188790807269083e-12
 		},
 		{
 			"ID": "b8caa32e4cd539765c1191a06d2ff956",
@@ -487,8 +479,7 @@
 			"ID": "cfe46fb14e20f5b1d9e23882e32fad4e",
 			"TypeName": "FlaxEngine.MeshCollider",
 			"ParentID": "d496badf41226683373a12a79b21ad25",
-			"Name": "Cone Collision Data",
-			"CollisionData": "d6c354f34a8e4a167878c8856b31de54"
+			"Name": "Cone Collision Data"
 		},
 		{
 			"ID": "2f2bdf984ffe643671a6a998e5de2024",
@@ -530,7 +521,7 @@
 					"Z": -1876.6102294921876
 				}
 			},
-			"Mass": 259.1523132324219
+			"Mass": 4.188790807269083e-12
 		},
 		{
 			"ID": "1212c197481f797c4441e0bc493938cb",
@@ -542,8 +533,7 @@
 			"ID": "7fcf47834de836e33e91658bd692deca",
 			"TypeName": "FlaxEngine.MeshCollider",
 			"ParentID": "87fa7b9f4a8ae151c3a6a9954f5214a4",
-			"Name": "Cone Collision Data",
-			"CollisionData": "d6c354f34a8e4a167878c8856b31de54"
+			"Name": "Cone Collision Data"
 		},
 		{
 			"ID": "8a38302e452982cbcf8d6886af7936e7",
@@ -585,7 +575,7 @@
 					"Z": -1274.763671875
 				}
 			},
-			"Mass": 259.1523132324219
+			"Mass": 4.188790807269083e-12
 		},
 		{
 			"ID": "4e2955324e95e37e9931d797370ec265",
@@ -599,8 +589,7 @@
 			"ID": "f0c3385649d7ecc14350bb81651f578a",
 			"TypeName": "FlaxEngine.MeshCollider",
 			"ParentID": "f16aa88d46b4e743553b2b9aa9d170cc",
-			"Name": "Cone Collision Data",
-			"CollisionData": "d6c354f34a8e4a167878c8856b31de54"
+			"Name": "Cone Collision Data"
 		},
 		{
 			"ID": "a880c3d44a1699fc5d68f9aa2b6b0420",
@@ -642,14 +631,13 @@
 					"Z": 1623.819580078125
 				}
 			},
-			"Mass": 259.1523132324219
+			"Mass": 4.188790807269083e-12
 		},
 		{
 			"ID": "2cb8bee24559991132a35a89ce680527",
 			"TypeName": "FlaxEngine.MeshCollider",
 			"ParentID": "26281a0e449a39289cdce5a77499135b",
-			"Name": "Cone Collision Data",
-			"CollisionData": "d6c354f34a8e4a167878c8856b31de54"
+			"Name": "Cone Collision Data"
 		},
 		{
 			"ID": "a6d6419e4a528bc3d082c8b9b862001f",
