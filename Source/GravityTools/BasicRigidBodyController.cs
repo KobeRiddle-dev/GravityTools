@@ -33,7 +33,9 @@ public class BasicRigidBodyController : SelfRightingBody
     /// </summary>
     public Vector3 MaxFootAcceleration { get; set; } = Vector3.One * 1000;
 
-    // Layers upon which the controller will be considered grounded
+    /// <summary>
+    /// Layers upon which the controller will be considered grounded
+    /// </summary>
     public LayersMask GroundLayers { get; set; }
 
     /// <summary>
@@ -111,6 +113,7 @@ public class BasicRigidBodyController : SelfRightingBody
     {
     }
 
+    /// <inheritdoc/>
     public override void OnFixedUpdate()
     {
         this.UpdateRotation();

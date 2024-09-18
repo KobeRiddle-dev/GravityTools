@@ -18,12 +18,23 @@ namespace GravityTools;
 /// </summary>
 public class SelfRightingBody : Script
 {
+    /// <summary>
+    /// The GravitySources whose volumes the player is currently within.
+    /// </summary>
     public List<GravitySource> GravitySources { get; private set; } = new List<GravitySource>();
+
+    /// <summary>
+    /// The strength with which the this rights itself. // TODO: change to angular velocity
+    /// </summary>
     public float RightingStrength { get; set; } = 0.5f;
+
+    /// <summary>
+    /// Whether this rights itself when in gravity
+    /// </summary>
     public bool SelfRightWhenInGravity { get; set; }
 
     /// <summary>
-    /// Whether or not this is in the gravity of a GravitySource
+    /// Whether this is in the gravity of a GravitySource
     /// </summary>
     [ReadOnly]
     public bool IsInGravity
@@ -34,6 +45,9 @@ public class SelfRightingBody : Script
         }
     }
 
+    /// <summary>
+    /// A connected RigidBody
+    /// </summary>
     protected RigidBody RigidBody
     {
         get
@@ -73,12 +87,14 @@ public class SelfRightingBody : Script
         // Here you can add code that needs to be called every frame
     }
 
+    /// <inheritdoc/>
     public override void OnFixedUpdate()
     {
         if (this.SelfRightWhenInGravity && this.IsInGravity)
             this.SelfRight();
     }
 
+    /// <inheritdoc/>
     public override void OnDebugDraw()
     {
         // Debug.Log("Drawing!");

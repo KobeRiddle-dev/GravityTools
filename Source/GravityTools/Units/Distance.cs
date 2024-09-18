@@ -100,29 +100,35 @@ public struct Distance
         return new Distance(-distance.centimeters);
     }
 
-    /// <param name="obj"></param>
-    /// <returns>True if </returns>
-    public override readonly bool Equals(object obj)
+    /// <param name="other"></param>
+    /// <returns>Whether other is a Distance AND is equal in length to this</returns>
+    public override readonly bool Equals(object other)
     {
-        if (obj == null || this.GetType() != obj.GetType())
+        if (other == null || this.GetType() != other.GetType())
         {
             return false;
         }
 
-        return this.centimeters.Equals(((Distance)obj).centimeters);
+        return this.centimeters.Equals(((Distance)other).centimeters);
     }
 
-    
+    /// <inheritdoc/>
     public override readonly int GetHashCode()
     {
         return this.centimeters.GetHashCode();
     }
 
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <returns>Whether right is a Distance AND is equal in length to left</returns>
     public static bool operator ==(Distance left, Distance right)
     {
         return left.Equals(right);
     }
 
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <returns>The inverse of Distance.operator ==</returns>
     public static bool operator !=(Distance left, Distance right)
     {
         return !left.Equals(right);

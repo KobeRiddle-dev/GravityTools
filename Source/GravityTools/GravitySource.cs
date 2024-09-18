@@ -220,7 +220,7 @@ public class GravitySource : Script
 
     private void AttractAllRigidBodiesInGravity()
     {
-        foreach (RigidBody rigidBody in rigidBodiesInGravity)
+        foreach (RigidBody rigidBody in this.rigidBodiesInGravity)
         {
             if (rigidBody.EnableGravity)
                 this.Attract(rigidBody);
@@ -233,7 +233,10 @@ public class GravitySource : Script
     /// <param name="rigidBody"></param>
     private void Attract(RigidBody rigidBody)
     {
-        Debug.Log("Attracting object: " + rigidBody.GetNamePath() + " with acceleration " + this.GetGravitationalAccelerationFor(rigidBody) + " and a vector " + this.GetGravitationalVectorTowards(rigidBody));
+        Debug.Log(this.GetNamePath() 
+                + " is attracting object: " + rigidBody.GetNamePath()
+                + " with acceleration " + this.GetGravitationalAccelerationFor(rigidBody)
+                + " and a vector " + this.GetGravitationalVectorTowards(rigidBody));
 
         rigidBody.AddForce(-this.GetGravitationalVectorTowards(rigidBody), mode: ForceMode.Force);
 
@@ -266,7 +269,7 @@ public class GravitySource : Script
         Real force = this.GetGravitationalForceBetween(rigidBody);
 
         Real acceleration = force / rigidBody.Mass;
-        
+
         return acceleration;
     }
 
