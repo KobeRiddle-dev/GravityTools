@@ -17,7 +17,7 @@ namespace Gravity;
 /// <summary>
 /// GravitySource2 Script.
 /// </summary>
-public class GravitySource : Orbiter
+public class GravitySource : Script
 {
     #region Editor Properties
 
