@@ -6,6 +6,7 @@
 /Screenshots/
 *.HotReload.*
 Source/*.Gen.*
+/Plugins/*
 
 # Local files
 imgui.ini
