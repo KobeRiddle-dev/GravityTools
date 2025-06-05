@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using FlaxEngine;
-using GravityTools.Units;
-
-
-#if USE_LARGE_WORLDS
+﻿#if USE_LARGE_WORLDS
 using Real = System.Double;
 using Mathr = FlaxEngine.Mathd;
 #else
@@ -11,7 +6,12 @@ using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 
-namespace GravityTools;
+using System.Collections.Generic;
+using FlaxEngine;
+using Units;
+using Units.Vectors;
+
+namespace Gravity;
 
 /// <summary>
 /// A body which rights itself when in gravity.
@@ -32,6 +32,14 @@ public class SelfRightingBody : Script
     /// Whether this rights itself when in gravity
     /// </summary>
     public bool SelfRightWhenInGravity { get; set; }
+
+    public Real MinimumAccelerationOfGravityMetersPerSecondSquared
+    {
+        get { return this.MinimumAccelerationOfGravity.Distance.Meters / (Real)this.MinimumAccelerationOfGravity.TimeSquared.TotalSeconds;}
+    }
+
+    [HideInEditor]
+    public Acceleration MinimumAccelerationOfGravity { get; set; }
 
     /// <summary>
     /// Whether this is in the gravity of a GravitySource
@@ -59,7 +67,6 @@ public class SelfRightingBody : Script
         set => this.rigidBody = value;
     }
     private RigidBody rigidBody;
-
 
     /// <inheritdoc/>
     public override void OnStart()
@@ -97,8 +104,7 @@ public class SelfRightingBody : Script
     /// <inheritdoc/>
     public override void OnDebugDraw()
     {
-        // Debug.Log("Drawing!");
-        DebugDraw.DrawRay(this.Actor.Position, this.GetStrongestGravitationalVector(), Color.PaleGreen, length: 20);
+        DebugDraw.DrawRay(this.Actor.Position, this.GetDirectionOfStrongestGravity(), Color.PaleGreen, length: 20);
     }
 
     /// <summary>
@@ -106,55 +112,31 @@ public class SelfRightingBody : Script
     /// </summary>
     public void SelfRight()
     {
-        Vector3 gravityDown = this.GetStrongestGravitationalVector().Normalized;
+        Vector3 gravityDown = this.GetDirectionOfStrongestGravity();
 
         Quaternion rightedOrientation = Quaternion.GetRotationFromTo(this.Actor.Transform.Down, gravityDown, Vector3.Zero) * this.Actor.Orientation;
 
         this.Actor.Orientation = Quaternion.Lerp(this.Actor.Orientation, rightedOrientation, RightingStrength);
     }
 
-    /// <param name="sourceMass">Outputs the mass of the GravitySource to which the vector points</param>
-    /// <returns>the strongest gravitational vector of all the gravity sources in this.GravitySources</returns>
-    public Vector3 GetStrongestGravitationalVector(out Mass sourceMass)
+    /// <returns>A normalized Vector3 representing the direction of the strongest gravitational pull</returns>
+    public Vector3 GetDirectionOfStrongestGravity()
     {
-        sourceMass = Mass.FromKilograms(1);
-        Vector3 strongestGravitationalVector = this.Actor.As<RigidBody>().PhysicsScene.Gravity * this.RigidBody.Mass;
+        Vector3 directionOfStrongestGravity = Vector3.Down;
+        Force3 strongestGravity = Force3.FromNewtons(this.Actor.As<RigidBody>().PhysicsScene.Gravity * this.RigidBody.Mass);
 
         foreach (GravitySource gravitySource in this.GravitySources)
         {
-            Vector3 gravityTowardsSource = -gravitySource.GetGravitationalVectorTowards(this.Actor.As<RigidBody>());
+            Vector3 directionFromThisToSource = (gravitySource.Actor.Position - this.Actor.Position).Normalized;
+            Force3 gravityTowardsSource = Force3.FromNewtons(directionFromThisToSource * gravitySource.GetGravitationalForceBetween(this.Actor.As<RigidBody>()).Newtons);
 
-            if (gravityTowardsSource.LengthSquared > strongestGravitationalVector.LengthSquared)
+            if (gravityTowardsSource.Length.Newtons > strongestGravity.Length.Newtons)
             {
-                strongestGravitationalVector = gravityTowardsSource;
-                sourceMass = gravitySource.Mass;
+                strongestGravity = gravityTowardsSource;
+                directionOfStrongestGravity = directionFromThisToSource;
             }
         }
 
-        return strongestGravitationalVector;
-    }
-
-    /// <returns>the strongest gravitational vector of all the gravity sources in this.GravitySources</returns>
-    public Vector3 GetStrongestGravitationalVector()
-    {
-        return GetStrongestGravitationalVector(out _);
-    }
-
-    /// <returns>the strongest gravitational force of all the gravity sources in this.GravitySources</returns>
-    public Real GetStrongestGravitationalPull()
-    {
-        Real strongestGravitationalPull = this.Actor.As<RigidBody>().PhysicsScene.Gravity.Length;
-
-        foreach (GravitySource gravitySource in this.GravitySources)
-        {
-            Real gravityWithSource = -gravitySource.GetGravitationalForceBetween(this.Actor.As<RigidBody>());
-
-            if (gravityWithSource > strongestGravitationalPull)
-            {
-                strongestGravitationalPull = gravityWithSource;
-            }
-        }
-
-        return strongestGravitationalPull;
+        return directionOfStrongestGravity;
     }
 }

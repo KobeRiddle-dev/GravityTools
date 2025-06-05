@@ -6,7 +6,7 @@ using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 
-namespace GravityTools;
+namespace Gravity;
 
 /// <summary>
 /// Constants for GravityTools

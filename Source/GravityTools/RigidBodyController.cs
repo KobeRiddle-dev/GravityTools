@@ -1,20 +1,21 @@
-﻿#if USE_LARGE_WORLDS
+#if USE_LARGE_WORLDS
 using Real = System.Double;
+using Mathr = FlaxEngine.Mathd;
 #else
-using Real = System.Single ;
+using Real = System.Single;
 using Mathr = FlaxEngine.Mathf;
 #endif
 
 using FlaxEngine;
 using System.ComponentModel;
-using GravityTools.Units;
-
-namespace GravityTools;
+using Units;
+using System;
+using Gravity;
 
 /// <summary>
-/// BasicRigidBodyController Script.
+/// RigidBodyController Script.
 /// </summary>
-public class BasicRigidBodyController : SelfRightingBody
+public class RigidBodyController : SelfRightingBody
 {
 
     /// <summary>
@@ -46,7 +47,19 @@ public class BasicRigidBodyController : SelfRightingBody
     {
         get
         {
-            return Physics.SphereCast(center: this.Actor.Position, radius: 5, direction: this.RigidBody.Transform.Down, layerMask: this.GroundLayers,maxDistance: 5);
+            return Physics.RayCast(this.Actor.Position, this.Actor.Transform.Down, 5, GroundLayers);
+            // return Physics.SphereCast(center: this.Actor.Position, radius: 10, direction: this.RigidBody.Transform.Down, layerMask: this.GroundLayers, maxDistance: 50);
+        }
+    }
+
+    public int Foo
+    {
+        get
+        {
+            if (this.IsGrounded)
+                return 0;
+            else
+                return 1;
         }
     }
 
@@ -116,6 +129,8 @@ public class BasicRigidBodyController : SelfRightingBody
     /// <inheritdoc/>
     public override void OnFixedUpdate()
     {
+        Debug.Log("Grounded?: " + this.IsGrounded);
+
         this.UpdateRotation();
         this.Move();
     }
@@ -124,7 +139,8 @@ public class BasicRigidBodyController : SelfRightingBody
     {
         GetRotationInput();
         float rotationFactor = Mathf.Saturate(CameraSmoothing * Time.DeltaTime);
-        RotateHead(rotationFactor);
+        if (this.IsInGravity)
+            RotateHead(rotationFactor);
         RotateBody(rotationFactor);
     }
 
@@ -139,6 +155,7 @@ public class BasicRigidBodyController : SelfRightingBody
 
     private void RotateHead(float rotationFactor)
     {
+        // FIXME: the lerping is probably breaking things. Lerping Euler Angles breaks stuff.
         this.head.LocalOrientation = Quaternion.Lerp(this.head.LocalOrientation, Quaternion.Euler(this.pitch, 0, 0), rotationFactor);
     }
 
@@ -146,18 +163,17 @@ public class BasicRigidBodyController : SelfRightingBody
     private void RotateBody(float rotationFactor)
     {
         // TODO: Make this more readable
-        Real strongestAcceleration = this.GetStrongestGravitationalVector(out Mass sourceMass).Length / sourceMass.Kilograms;
-        Debug.Log("strongestAcceleration " + strongestAcceleration);
-        if (this.IsInGravity && strongestAcceleration > 1)
+        if (this.IsInGravity)
         {
             this.SelfRight();
+            this.Actor.Orientation = Quaternion.Lerp(this.Actor.Orientation, Quaternion.Euler(0, this.yaw, this.roll), rotationFactor);
         }
         else
         {
-            this.Actor.Orientation = Quaternion.Lerp(this.Actor.Orientation, Quaternion.Euler(this.pitch, 0, this.roll), rotationFactor);
+            this.Actor.Orientation = Quaternion.Lerp(this.Actor.Orientation, Quaternion.Euler(this.pitch, this.yaw, this.roll), rotationFactor);
         }
-        this.Actor.Orientation = Quaternion.Lerp(this.Actor.Orientation, Quaternion.Euler(0, this.yaw, 0), rotationFactor);
 
+        // Update constraints to try and fix the leaning
         if (this.IsGrounded)
             this.RigidBody.Constraints = RigidbodyConstraints.LockRotationX | RigidbodyConstraints.LockRotationZ;
         else
