@@ -9,7 +9,6 @@ using Mathr = FlaxEngine.Mathf;
 using System;
 using FlaxEngine;
 using Units.Vectors;
-using Units;
 using FlaxEngine.Utilities;
 
 namespace Gravity;

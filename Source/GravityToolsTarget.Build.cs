@@ -9,5 +9,6 @@ public class GravityToolsTarget : GameProjectTarget
 
         // Reference the modules for game
         Modules.Add("GravityTools");
+        Modules.Add("Units");
     }
 }

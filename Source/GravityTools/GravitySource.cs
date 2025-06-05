@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using FlaxEngine;
 using Units;
 using static Gravity.Constants;
-using System.Linq;
 
 namespace Gravity;
 

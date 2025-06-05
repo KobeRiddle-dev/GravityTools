@@ -18,5 +18,8 @@ public class GravityTools : GameModule
         // To add C++ define use: options.PublicDefinitions.Add("COMPILE_WITH_FLAX");
         // To learn more see scripting documentation.
         BuildNativeCode = false;
+
+        options.PublicDependencies.Add("Units");
+
     }
 }
