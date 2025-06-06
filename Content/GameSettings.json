@@ -1,11 +1,37 @@
-﻿{
+{
 	"ID": "b977939b436cc20f2cc674aaf1c1cd78",
 	"TypeName": "FlaxEditor.Content.Settings.GameSettings",
-	"EngineBuild": 6167,
+	"EngineBuild": 6705,
 	"Data": {
 	"ProductName": "GravityTools",
 	"CompanyName": "KobeRiddle-dev",
-	"Version": "0.1",
-	"FirstScene": "00000000000000000000000000000000"
+	"CopyrightNotice": null,
+	"Icon": null,
+	"FirstScene": "00000000000000000000000000000000",
+	"NoSplashScreen": false,
+	"SplashScreen": null,
+	"Time": null,
+	"Audio": null,
+	"LayersAndTags": null,
+	"Physics": "1551bef444f07cc6f135eda03413d609",
+	"Input": null,
+	"Graphics": null,
+	"Network": null,
+	"Navigation": null,
+	"Localization": null,
+	"GameCooking": null,
+	"Streaming": null,
+	"CustomSettings": null,
+	"WindowsPlatform": null,
+	"UWPPlatform": null,
+	"LinuxPlatform": null,
+	"PS4Platform": null,
+	"XboxOnePlatform": null,
+	"XboxScarlettPlatform": null,
+	"AndroidPlatform": null,
+	"SwitchPlatform": null,
+	"PS5Platform": null,
+	"MacPlatform": null,
+	"iOSPlatform": null
 }
 }

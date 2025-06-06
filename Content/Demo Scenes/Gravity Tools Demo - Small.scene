@@ -1,0 +1,190 @@
+{
+	"ID": "96890b4d4049124dad3f39b392776c96",
+	"TypeName": "FlaxEngine.SceneAsset",
+	"EngineBuild": 6705,
+	"Data": [
+		{
+			"ID": "96890b4d4049124dad3f39b392776c96",
+			"TypeName": "FlaxEngine.Scene",
+			"LightmapSettings": {
+				"IndirectLightingIntensity": 1.0,
+				"GlobalObjectsScale": 1.0,
+				"ChartsPadding": 3,
+				"AtlasSize": 1024,
+				"BounceCount": 1,
+				"CompressLightmaps": true,
+				"UseGeometryWithNoMaterials": true,
+				"Quality": 10
+			}
+		},
+		{
+			"ID": "910254d24eb5ec57d690e6a4a18d09ae",
+			"TypeName": "FlaxEngine.DirectionalLight",
+			"ParentID": "96890b4d4049124dad3f39b392776c96",
+			"Name": "Sun",
+			"Transform": {
+				"Translation": {
+					"X": 0.0,
+					"Y": 100.0,
+					"Z": 0.0
+				},
+				"Orientation": {
+					"X": 0.3826834559440613,
+					"Y": 0.0,
+					"Z": 0.0,
+					"W": 0.9238795042037964
+				}
+			}
+		},
+		{
+			"ID": "2629a55f481c88ef60c802995901eef1",
+			"TypeName": "FlaxEngine.Sky",
+			"ParentID": "96890b4d4049124dad3f39b392776c96",
+			"Name": "Sky",
+			"Transform": {
+				"Translation": {
+					"X": 0.0,
+					"Y": 50.0,
+					"Z": 0.0
+				}
+			},
+			"Sun": "910254d24eb5ec57d690e6a4a18d09ae"
+		},
+		{
+			"ID": "d2b5e78f400c4f4eaf9e0aae29c89736",
+			"TypeName": "FlaxEngine.SkyLight",
+			"ParentID": "96890b4d4049124dad3f39b392776c96",
+			"Name": "SkyLight",
+			"Brightness": 2.5,
+			"CustomTexture": "c54410104ff39427bc11e5bc761d66b0"
+		},
+		{
+			"ID": "5cabeaaa49b41e9b88920a9e0b6e1b29",
+			"PrefabID": "ddf4fed04ec4ca20d3f1ca887c56b6d4",
+			"PrefabObjectID": "00aec94440199d187f856dab66db1f58",
+			"ParentID": "96890b4d4049124dad3f39b392776c96",
+			"Name": "Planet",
+			"Mass": 523.5988159179688
+		},
+		{
+			"ID": "259bb84f49f35508bb74668d55613145",
+			"PrefabID": "ddf4fed04ec4ca20d3f1ca887c56b6d4",
+			"PrefabObjectID": "1fb62f8b4fbec708fcc02e8023073ff5",
+			"ParentID": "5cabeaaa49b41e9b88920a9e0b6e1b29",
+			"V": {
+	"mass": {
+		"kilograms": 523.5988
+	},
+	"MassKilograms": 523.5988,
+	"SurfaceGravityMetersPerSecondSquared": 1.3978162E-11,
+	"SurfaceGForce": 1.4263431E-12,
+	"Mass": {
+		"kilograms": 523.5988
+	},
+	"SurfaceGravity": {
+		"Velocity": {
+			"Distance": {
+				"centimeters": 1.3978162E-09
+			},
+			"Time": "00:00:01"
+		},
+		"Time": "00:00:01"
+	}
+}
+		},
+		{
+			"ID": "c9f9b59f4f2cf086ce56a8967dd2076d",
+			"PrefabID": "ddf4fed04ec4ca20d3f1ca887c56b6d4",
+			"PrefabObjectID": "bd3cbe094190ecb5c2c7abbb6be5a6ad",
+			"ParentID": "5cabeaaa49b41e9b88920a9e0b6e1b29",
+			"V": {}
+		},
+		{
+			"ID": "09ec05a34557414db06e2aaacdbe1d82",
+			"PrefabID": "ddf4fed04ec4ca20d3f1ca887c56b6d4",
+			"PrefabObjectID": "798db63a440662177f57fc980664a40c",
+			"ParentID": "5cabeaaa49b41e9b88920a9e0b6e1b29",
+			"Buffer": {
+				"Entries": [
+					{}
+				]
+			}
+		},
+		{
+			"ID": "e1a4283e44ac7b861a606c8f23f1a6e8",
+			"PrefabID": "ddf4fed04ec4ca20d3f1ca887c56b6d4",
+			"PrefabObjectID": "df35cae845dffdb32787f08f642f1daf",
+			"ParentID": "5cabeaaa49b41e9b88920a9e0b6e1b29"
+		},
+		{
+			"ID": "84990b424ea0d30ff540538695759e2f",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "b5b6b9374aae97b4ed1427b0e85c7066",
+			"ParentID": "96890b4d4049124dad3f39b392776c96",
+			"Transform": {
+				"Translation": {
+					"X": 2725.489501953125,
+					"Y": 1268.3623046875,
+					"Z": 5489.53662109375
+				}
+			}
+		},
+		{
+			"ID": "fcf5c781470bc11ad9b2c899b6c990a8",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "85a04b2345870d7fa464278b444d6276",
+			"ParentID": "84990b424ea0d30ff540538695759e2f",
+			"V": {
+	"MinimumAccelerationOfGravity": {
+		"Velocity": {
+			"Distance": {
+				"centimeters": 0.0
+			},
+			"Time": "00:00:00"
+		},
+		"Time": "00:00:00"
+	}
+}
+		},
+		{
+			"ID": "7a9fc68b464085bda498e79067dde04a",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "f69371a448ba4face8ea7ebf1fcd07b9",
+			"ParentID": "84990b424ea0d30ff540538695759e2f"
+		},
+		{
+			"ID": "bab3f1134ab497405de54295a1e621c3",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "0ec4e1574a52048f47808983b9dad528",
+			"ParentID": "84990b424ea0d30ff540538695759e2f",
+			"Buffer": {
+				"Entries": [
+					{}
+				]
+			}
+		},
+		{
+			"ID": "7438b9fc444b6ffc10ee72b0541abc19",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "30bef5da4baecb49ac024e816297c39b",
+			"ParentID": "84990b424ea0d30ff540538695759e2f",
+			"Buffer": {
+				"Entries": [
+					{}
+				]
+			}
+		},
+		{
+			"ID": "39af85c44befa63fe1d3fbb71182151b",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "cbd112e94a2e387b4a186080a47d852d",
+			"ParentID": "7438b9fc444b6ffc10ee72b0541abc19"
+		},
+		{
+			"ID": "3751552345cc89b38c848087c727a139",
+			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
+			"PrefabObjectID": "6f78cd18404bcb5d84a4bf91af5b5367",
+			"ParentID": "7438b9fc444b6ffc10ee72b0541abc19"
+		}
+	]
+}

@@ -1,7 +1,7 @@
 {
 	"ID": "74a68a984824b4510d12589f199ad68f",
 	"TypeName": "FlaxEngine.SceneAsset",
-	"EngineBuild": 6512,
+	"EngineBuild": 6705,
 	"Data": [
 		{
 			"ID": "74a68a984824b4510d12589f199ad68f",
@@ -75,7 +75,7 @@
 			"Name": "Directional Light",
 			"Transform": {
 				"Translation": {
-					"X": -1.6893305778503419,
+					"X": -1.6893305778503418,
 					"Y": 267.7931823730469,
 					"Z": 0.0
 				},
@@ -107,32 +107,6 @@
 			},
 			"Brightness": 0.75,
 			"Mode": 0
-		},
-		{
-			"ID": "ad532e5e4bf2e088fdbcf4b8f78aad4a",
-			"TypeName": "FlaxEngine.PointLight",
-			"ParentID": "28553d634087c67c711ebd96080482aa",
-			"Name": "SunLight",
-			"Transform": {
-				"Scale": {
-					"X": 100.0,
-					"Y": 100.0,
-					"Z": 100.0
-				}
-			},
-			"Color": {
-				"R": 0.7960784435272217,
-				"G": 0.95686274766922,
-				"B": 0.24313725531101228,
-				"A": 1.0
-			},
-			"Brightness": 50.0,
-			"CastVolumetricShadow": true,
-			"ShadowsDistance": 5000.0,
-			"ShadowsFadeDistance": 500.0,
-			"ShadowsDepthBias": 0.004999999888241291,
-			"Radius": 100000.0,
-			"SourceRadius": 1000.0
 		},
 		{
 			"ID": "69742b4c4995303b615543aea7848329",
@@ -180,19 +154,6 @@
 			"EnableGravity": false
 		},
 		{
-			"ID": "321774114b338f96d7671f9cb099f8e0",
-			"TypeName": "GravityTools.GravitySource",
-			"ParentID": "22c499294afc2c3c69d4fc86a2e0a58b",
-			"V": {
-	"GForce": 9.799999598175377,
-	"SurfaceGravity": 96.0399960621187,
-	"MassKilograms": 1.4389998E+12,
-	"Mass": {},
-	"RigidBody": "22c499294afc2c3c69d4fc86a2e0a58b",
-	"GravityVolume": "8009f91543070a56c84cc69b37a687ae"
-}
-		},
-		{
 			"ID": "6637966a4d92ec55b6b7c6864961e599",
 			"TypeName": "FlaxEngine.StaticModel",
 			"ParentID": "22c499294afc2c3c69d4fc86a2e0a58b",
@@ -235,6 +196,26 @@
 			"TypeName": "FlaxEngine.SphereCollider",
 			"ParentID": "22c499294afc2c3c69d4fc86a2e0a58b",
 			"Name": "SurfaceCollider"
+		},
+		{
+			"ID": "ad532e5e4bf2e088fdbcf4b8f78aad4a",
+			"TypeName": "FlaxEngine.PointLight",
+			"ParentID": "22c499294afc2c3c69d4fc86a2e0a58b",
+			"Name": "SunLight",
+			"Color": {
+				"R": 0.7960784435272217,
+				"G": 0.95686274766922,
+				"B": 0.24313725531101227,
+				"A": 1.0
+			},
+			"Brightness": 50.0,
+			"CastVolumetricShadow": true,
+			"ShadowsDistance": 5000.0,
+			"ShadowsFadeDistance": 500.0,
+			"ShadowsDepthBias": 0.004999999888241291,
+			"Radius": 100000.0,
+			"SourceRadius": 1000.0,
+			"FallOffExponent": 2.0
 		},
 		{
 			"ID": "153a50da4ca0e22133b0a980bd262a8b",
@@ -318,20 +299,6 @@
 			"EnableGravity": false
 		},
 		{
-			"ID": "a2b3eaef4d35e4d4e2907297399bfca6",
-			"TypeName": "GravityTools.GravitySource",
-			"ParentID": "cb1bc02d46b2fd50a724a7ae93afc034",
-			"V": {
-	"GravitationalDirection": {
-		"X": 0.0,
-		"Y": 1.0,
-		"Z": 0.0
-	},
-	"RigidBody": "cb1bc02d46b2fd50a724a7ae93afc034",
-	"GravityVolume": "be61b53f400bfffa7a84d29a02f3ecb0"
-}
-		},
-		{
 			"ID": "4a9d87134ab42f4294db6bbcf1902bde",
 			"TypeName": "FlaxEngine.StaticModel",
 			"ParentID": "cb1bc02d46b2fd50a724a7ae93afc034",
@@ -412,7 +379,7 @@
 			"Transform": {
 				"Translation": {
 					"X": -8140.0,
-					"Y": 406.12335205078127,
+					"Y": 406.12335205078125,
 					"Z": -3184.25341796875
 				}
 			},
@@ -462,18 +429,10 @@
 				"Translation": {
 					"X": -8098.779296875,
 					"Y": 433.3966064453125,
-					"Z": -1876.6102294921876
+					"Z": -1876.6102294921875
 				}
 			},
 			"Mass": 4.188790807269083e-12
-		},
-		{
-			"ID": "b8caa32e4cd539765c1191a06d2ff956",
-			"TypeName": "GravityTools.SelfRightingBody",
-			"ParentID": "d496badf41226683373a12a79b21ad25",
-			"V": {
-	"SelfRightWhenInGravity": true
-}
 		},
 		{
 			"ID": "cfe46fb14e20f5b1d9e23882e32fad4e",
@@ -518,16 +477,10 @@
 				"Translation": {
 					"X": -7622.18408203125,
 					"Y": 433.3966064453125,
-					"Z": -1876.6102294921876
+					"Z": -1876.6102294921875
 				}
 			},
 			"Mass": 4.188790807269083e-12
-		},
-		{
-			"ID": "1212c197481f797c4441e0bc493938cb",
-			"TypeName": "GravityTools.SelfRightingBody",
-			"ParentID": "87fa7b9f4a8ae151c3a6a9954f5214a4",
-			"V": {}
 		},
 		{
 			"ID": "7fcf47834de836e33e91658bd692deca",
@@ -576,14 +529,6 @@
 				}
 			},
 			"Mass": 4.188790807269083e-12
-		},
-		{
-			"ID": "4e2955324e95e37e9931d797370ec265",
-			"TypeName": "GravityTools.SelfRightingBody",
-			"ParentID": "f16aa88d46b4e743553b2b9aa9d170cc",
-			"V": {
-	"SelfRightWhenInGravity": true
-}
 		},
 		{
 			"ID": "f0c3385649d7ecc14350bb81651f578a",
@@ -676,16 +621,26 @@
 				"Translation": {
 					"X": -7378.88134765625,
 					"Y": 218.62197875976563,
-					"Z": 1456.2403564453126
+					"Z": 1456.2403564453125
 				}
 			}
 		},
 		{
-			"ID": "08b19ea447037582795096834124e495",
-			"PrefabID": "55c5cffe45137a8d25396eafbfe99c1f",
-			"PrefabObjectID": "e4cef6b146a44c5f3d64c49f61534426",
+			"ID": "88ff73754496b77ce56064bac322e212",
+			"TypeName": "RigidBodyController",
 			"ParentID": "35fc2ffb4d1624cb91eeb09975137371",
-			"V": {}
+			"V": {
+	"SelfRightWhenInGravity": true,
+	"MinimumAccelerationOfGravity": {
+		"Velocity": {
+			"Distance": {
+				"centimeters": 0.0
+			},
+			"Time": "00:00:00"
+		},
+		"Time": "00:00:00"
+	}
+}
 		},
 		{
 			"ID": "9cf4dc24448598bf296897824841a593",
